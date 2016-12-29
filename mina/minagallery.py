@@ -105,16 +105,23 @@ if __name__ == "__main__":
             try:
                 prop = tempData.get('class')  # get class property
                 #print(tempData)
+
+                #if end of this page
                 if prop != None and (prop[0] == "f_l"):  #if end of this page
                     pageindex += 1 #go to next page
                     pageURL = "http://gall.dcinside.com/mgallery/board/lists/?id=twicemina&page=" + str(pageindex) + "&exception_mode=recommend"
                     print("next page is = ", pageindex)
                     break #end of for and go to while loop
                 #end of if
+
                 class_list = ['icon_pic_b', 'icon_movie', 'icon_txt_b']
+
+                #if article have pic or gif
                 if prop != None and prop[0] in class_list:  # if class property exist, check icon_pic_n
                     url_info = tempData.get('href') #get Article URL
-                    if url_info[:4] != "http": #attach http://
+
+                    #attach http://
+                    if url_info[:4] != "http":
                         url_info = "http://gall.dcinside.com" + url_info
                     #end of if
 
@@ -138,7 +145,6 @@ if __name__ == "__main__":
                         sys.exit(1)
                     bs2 = goIntoUrl(url_info)
                     parsedData = bs2.find_all('div', 's_write')
-                    #parsedData = bs2.find_all('ul', 'appending_file')
                     #parsedData = bs2.find_all('ul', 'appending_file')#finding on AppendingFile
                     parsedData2 = parsedData[0].find_all('img')
                     for index2, tempInFor in enumerate(parsedData2):
@@ -158,21 +164,10 @@ if __name__ == "__main__":
                             filename = str(index2) + '.gif'
 
                         download_web_image(tempurl, folder_name, filename)
+                    #end of for
+                #end of if
 
 
             except:
                 with open('errmina.txt', 'a') as mysavedata:
                     print("===Error in Crawling===", file=mysavedata)
-
-
-
-
-
-
-
-
-
-
-
-
-
